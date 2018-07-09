@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Settings.Configuration;
 
 namespace CIP_1
 {
@@ -43,8 +44,8 @@ namespace CIP_1
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-    
-            loggerFactory.AddFile("C:\\Temp\\logs.txt");
+     
+
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();

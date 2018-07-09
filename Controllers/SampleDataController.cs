@@ -6,17 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using CIP_1.DataModel;
 using CIP_1.Facade;
 using CIP_1.ServiceLocator;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace CIP_1.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
-        ILogger _logger;
-        public SampleDataController(ILogger<SampleDataController> logger)
+       
+        public SampleDataController()
     {
-        _logger = logger;
+       
+        Log.Information("I am in the SampleDataController");
     }
         private static string[] Summaries = new[]
         {
@@ -37,8 +38,8 @@ namespace CIP_1.Controllers
 
         [HttpGet("[action]")]
         public IEnumerable<Subscription> GetSubscriptions(){
-            _logger.LogInformation("Executing GetSubscription..");
-            _logger.LogWarning("THIS IS A WARNING FROM MY CODE...");
+            Log.Error("Executing GetSubscription..");
+            Log.Warning("THIS IS A WARNING FROM MY CODE...");
           try
           {
               var i=10;
@@ -47,7 +48,7 @@ namespace CIP_1.Controllers
           catch (Exception ex)
           {
               
-              _logger.LogWarning(ex.Message);
+              Log.Fatal(ex.Message);
           }
            ServiceLocatorTool serviceLocator = new ServiceLocatorTool();
             // SubscriptionFacade facade = new SubscriptionFacade(serviceLocator.ObjServiceLocator);
@@ -59,7 +60,7 @@ namespace CIP_1.Controllers
 
         [HttpGet("[action]")]
         public IEnumerable<CustomerNote> GetActveUserGuides(){
-            _logger.LogInformation("Executing GetActveUserGuides...");
+            Log.Information("Executing GetActveUserGuides...");
             SubscriptionFacade facade = new SubscriptionFacade();
             var subs = facade.ActiveUserGuideFacade();
             var results = subs.Result.ToList();
